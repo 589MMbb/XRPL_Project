@@ -52,12 +52,23 @@ if __name__ == "__main__":
     # Load your building data
     with open('building_data.json', 'r') as f:
         building_data = json.load(f)
+    
+    # Load your air rights data
+    with open('air_rights_output.json', 'r') as f:
+        air_rights_data = json.load(f)
 
-    # Generate hash from data
-    hash_value = generate_hash_from_data(building_data)
+    # Combine your building and air rights data
+    combined_data = {
+        'building_data': building_data,
+        'air_rights_data': air_rights_data
+    }
+
+    # Generate hash from combined data
+    hash_value = generate_hash_from_data(combined_data)
 
     # Write the hash to the file for verification or other purposes
     write_hash_to_file(hash_value)
 
     # Mint the NFT
     mint_nft(test_wallet, hash_value)
+

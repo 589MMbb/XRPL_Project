@@ -1,0 +1,17 @@
+{
+    "Waterloo": {
+        "zoning": "78705",
+        "landArea": "17424",
+        "otherDetails": "(.4 Acres), 30 Story, West Campus, Housing"
+    },
+    "Torre": {
+        "zoning": "MF-4-NP",
+        "landArea": "247,900",
+        "otherDetails": "(.33 Acres), B1, Owner ID: 1917221"
+    },
+    "12009": {
+        "zoning": "NF-4-NP",
+        "landArea": "1000",
+        "otherDetails": "Test"
+    }
+}
