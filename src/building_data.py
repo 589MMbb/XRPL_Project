@@ -33,7 +33,7 @@ def save_building_data():
     messagebox.showinfo("Success", "Building data saved successfully!")
     refresh_display()
 
-# Function to display all building data
+
 def refresh_display():
     if os.path.exists(JSON_PATH):
         with open(JSON_PATH, 'r') as file:
@@ -67,40 +67,40 @@ def on_address_select(event):
 window = tk.Tk()
 window.title("Building Data Manager")
 
-# Combobox for selecting Building Name or Address
+
 building_address_combobox = ttk.Combobox(window, postcommand=refresh_display)
 building_address_combobox.pack(pady=10)
 building_address_combobox.bind("<<ComboboxSelected>>", on_address_select)
 
-# Label and Entry for Building Name
+
 label_name = tk.Label(window, text="Building Name:")
 label_name.pack(pady=10)
 name_entry = tk.Entry(window)
 name_entry.pack(pady=10)
 
-# Label and Entry for Zoning
+
 label_zoning = tk.Label(window, text="Zoning:")
 label_zoning.pack(pady=10)
 zoning_entry = tk.Entry(window)
 zoning_entry.pack(pady=10)
 
-# Label and Entry for Land Area
+
 label_land_area = tk.Label(window, text="Land Area:")
 label_land_area.pack(pady=10)
 land_area_entry = tk.Entry(window)
 land_area_entry.pack(pady=10)
 
-# Label and Entry for Other Details
+
 label_other_details = tk.Label(window, text="Other Details:")
 label_other_details.pack(pady=10)
 other_details_entry = tk.Entry(window)
 other_details_entry.pack(pady=10)
 
-# Save Button
+
 save_button = tk.Button(window, text="Save Building Data", command=save_building_data)
 save_button.pack(pady=20)
 
-# Text widget to display the building data
+
 display_text = tk.Text(window, width=60, height=20)
 display_text.pack(pady=20)
 

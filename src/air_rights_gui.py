@@ -3,7 +3,6 @@ from tkinter import ttk, messagebox
 import json
 import os
 
-# Assume this module is defined correctly in another file
 from xrp_price import get_xrp_price
 
 JSON_PATH = "building_data.json"
@@ -33,13 +32,13 @@ def create_scale(frame, row, text, from_=0, to_=100):
     return scale, value_label
 
 def on_building_select(event):
-    # When a building is selected from the combobox, update the fields
+
     building = building_combobox.get()
     building_data = load_building_data()
     details = building_data.get(building, {})
     max_buildable_sqft_entry.delete(0, tk.END)
     existing_sqft_entry.delete(0, tk.END)
-    # If details are present, insert them into the fields
+
     if details:
         max_buildable_sqft_entry.insert(0, details.get('max_buildable_sqft', ''))
         existing_sqft_entry.insert(0, details.get('existing_sqft', ''))
