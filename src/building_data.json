@@ -13,5 +13,15 @@
         "zoning": "NF-4-NP",
         "landArea": "1000",
         "otherDetails": "Test"
+    },
+    "Villas on San Gabriel": {
+        "zoning": "MF-4-NP",
+        "landArea": "\t0.9183",
+        "otherDetails": "08 (APTS 100+) | MORRISON & HEAD LP"
+    },
+    "Villas on Rio": {
+        "zoning": "B1 ",
+        "landArea": "0.6574",
+        "otherDetails": "08 (APTS 100+) | 286 Units"
     }
 }

@@ -1,74 +1,65 @@
-import xrpl
+from xrpl.transaction import submit_and_wait
+from xrpl.models.transactions import NFTokenMint, NFTokenMintFlag
+from xrpl.wallet import generate_faucet_wallet, Wallet
 from xrpl.clients import JsonRpcClient
-from xrpl.wallet import Wallet
-from xrpl.models.transactions import NFTokenMint
-from xrpl.models.requests import AccountNFTs
-from xrpl.utils import str_to_hex
+from binascii import hexlify
+import json
 
-testnet_url = "https://s.altnet.rippletest.net:51234"
+# Constants for the XRPL Testnet and the JSON file paths
+JSON_RPC_URL = "https://s.altnet.rippletest.net:51234/"
+COMBINED_NFT_METADATA_JSON_PATH = "CombinedNFTMetadata.json"
 
-def mint_token(seed, uri, flags, transfer_fee, taxon):
-    """mint_token"""
-    # Get the client
-    minter_wallet = Wallet.from_seed(seed)
-    client = JsonRpcClient(testnet_url)
+# Initialize the client to connect to the XRPL Testnet
+client = JsonRpcClient(JSON_RPC_URL)
 
-    # Get the sequence number for the wallet
-    account_info = xrpl.account.get_account_info(minter_wallet.classic_address, client)
-    if "account_data" in account_info.result:
-        sequence = account_info.result["account_data"]["Sequence"]
+# Function to load metadata from JSON
+def load_metadata():
+    with open(COMBINED_NFT_METADATA_JSON_PATH, 'r') as file:
+        return json.load(file)
+
+# Function to generate a new wallet or use an existing one
+def get_wallet(seed=""):
+    if seed:
+        return Wallet.from_seed(seed)
     else:
-        raise ValueError("Failed to retrieve account sequence number")
+        # Request a new testnet wallet from the faucet
+        return generate_faucet_wallet(client=client)
 
-    # Define the mint transaction
+# Main function to mint the NFT
+def mint_nft():
+    # Load the combined NFT metadata
+    combined_metadata = load_metadata()
+    building_name = combined_metadata["building"]
+    # Sample URI with the recommended ending
+    metadata_uri = f"ipfs://bafybeigdyrzt5sfp7udm7hu76uh7y26nf4dfuylqabf3oclgtqy55fbzdi/{building_name}.json"
+
+    # Convert the URI to hexadecimal format for XRPL
+    metadata_uri_hex = hexlify(metadata_uri.encode()).upper().decode()
+
+    # Get wallet details
+    issuer_wallet = get_wallet()  # Pass a seed as argument if you have one
+
+    # Print wallet details
+    print(f"Issuer Account: {issuer_wallet.classic_address}")
+    print(f"Seed: {issuer_wallet.seed}")
+
+    # Construct NFTokenMint transaction to mint the NFT with the metadata URI
     mint_tx = NFTokenMint(
-        account=minter_wallet.classic_address,
-        sequence=sequence,  # Include the sequence number in the transaction
-        uri=str_to_hex(uri),
-        flags=int(flags),
-        transfer_fee=int(transfer_fee),
-        nftoken_taxon=int(taxon)
+        account=issuer_wallet.classic_address,
+        uri=metadata_uri_hex,  # Include the URI in hexadecimal format
+        flags=NFTokenMintFlag.TF_TRANSFERABLE,  # Set the transferable flag
+        nftoken_taxon=0  # No specific taxon
     )
 
-    # Submit the transaction and get results
-    reply = ""
-    try:
-        response = xrpl.transaction.safe_sign_and_autofill_transaction(
-            mint_tx, minter_wallet, client
-        )
-        response = xrpl.transaction.submit_and_wait(response, client)
-        reply = response.result
-    except xrpl.transaction.XRPLReliableSubmissionException as e:
-        reply = f"Submit failed: {e}"
+    # Sign and submit the mint transaction
+    response = submit_and_wait(transaction=mint_tx, client=client, wallet=issuer_wallet)
 
-    return reply
+    # Check the result
+    if response.is_successful():
+        print(f"Mint Transaction successful: {response.result}")
+    else:
+        print(f"Mint Transaction failed: {response.result}")
 
-
-
-def get_tokens(account):
-    """get_tokens"""
-    client=JsonRpcClient(testnet_url)
-    acct_nfts=AccountNFTs(
-        account=account
-    )
-    response=client.request(acct_nfts)
-    return response.result
-
-
-def burn_token(seed, nftoken_id):
-    """burn_token"""
-# Get the client
-    owner_wallet=Wallet.from_seed(seed)
-    client=JsonRpcClient(testnet_url)
-    burn_tx=xrpl.models.transactions.NFTokenBurn(
-        account=owner_wallet.address,
-        nftoken_id=nftoken_id    
-    )
-# Submit the transaction and get results
-    reply=""
-    try:
-        response=xrpl.transaction.submit_and_wait(burn_tx,client,owner_wallet)
-        reply=response.result
-    except xrpl.transaction.XRPLReliableSubmissionException as e:
-        reply=f"Submit failed: {e}"
-    return reply
+# Run the minting process
+if __name__ == "__main__":
+    mint_nft()

@@ -1,0 +1,13 @@
+{
+    "building": "Torre",
+    "air_rights_data": {
+        "air_rights_usd": 68406855.95567867,
+        "air_rights_xrp": 99234859.79502028
+    },
+    "building_data": {
+        "zoning": "MF-4-NP",
+        "landArea": "247,900",
+        "otherDetails": "(.33 Acres), B1, Owner ID: 1917221"
+    },
+    "sample_nft_uri": "ipfs://bafybeigdyrzt5sfp7udm7hu76uh7y26nf4dfuylqabf3oclgtqy55fbzdi/Torre.json"
+}
