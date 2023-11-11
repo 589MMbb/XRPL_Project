@@ -25,7 +25,8 @@ To set up the application, follow these steps:
 To run the application, execute the following command in the terminal:
 ```sh
 python Mint-NFT-Air.py
-_______________________________________________________________________________________________________________________________________________
+
+____________________________________________________________________________________
 
 ISC License
 

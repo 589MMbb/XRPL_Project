@@ -1,18 +1,13 @@
 {
     "Waterloo": {
-        "zoning": "78705",
-        "landArea": "17424",
-        "otherDetails": "(.4 Acres), 30 Story, West Campus, Housing"
+        "zoning": "NH-5",
+        "landArea": ".06",
+        "otherDetails": "225 Units "
     },
     "Torre": {
-        "zoning": "MF-4-NP",
-        "landArea": "247,900",
-        "otherDetails": "(.33 Acres), B1, Owner ID: 1917221"
-    },
-    "12009": {
-        "zoning": "NF-4-NP",
-        "landArea": "1000",
-        "otherDetails": "Test"
+        "zoning": "NH-4",
+        "landArea": "0.6",
+        "otherDetails": "18 Storys, Test 1"
     },
     "Villas on San Gabriel": {
         "zoning": "MF-4-NP",
@@ -23,5 +18,10 @@
         "zoning": "B1 ",
         "landArea": "0.6574",
         "otherDetails": "08 (APTS 100+) | 286 Units"
+    },
+    "TorreTest": {
+        "zoning": "NH3",
+        "landArea": ".09",
+        "otherDetails": "Test3"
     }
 }
