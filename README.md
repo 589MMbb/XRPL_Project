@@ -1,4 +1,4 @@
-# XRPL Building Air-Rights NFT 
+# XRPL Building Air-Rights
 
 ## Overview
 This application provides a comprehensive workflow for real estate professionals or enthusiasts who wish to tokenize air rights on the XRP Ledger (XRPL) as non-fungible tokens (NFTs). It combines several steps into one integrated system, including:
